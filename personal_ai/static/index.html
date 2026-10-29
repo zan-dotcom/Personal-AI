@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Hearth · Personal AI</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside id="sidebar">
+    <a class="brand" href="/" aria-label="Hearth home"><span class="brand-icon">h</span> hearth<span class="brand-dot">.</span></a>
+    <p class="eyebrow">YOUR SPACE TO THINK</p>
+    <button id="new-chat" class="new-chat" title="New conversation (Ctrl/Cmd+Shift+N)"><span>＋</span> New conversation <kbd>N</kbd></button>
+    <div class="history-label">CONVERSATIONS</div>
+    <nav id="history" aria-label="Saved conversations"></nav>
+    <div class="sidebar-bottom"><span class="privacy-dot"></span><div>At home. On your terms.<small>Chats saved on this computer</small></div></div>
+  </aside>
+  <main>
+    <header>
+      <button id="menu" class="icon-button" aria-label="Toggle conversations">☰</button>
+      <div class="model-control"><span class="model-icon">✳</span><select id="model" aria-label="AI model"><option value="">Checking models…</option></select></div>
+      <span id="connection" class="connection">Connecting</span>
+      <div class="header-actions"><button id="export" class="quiet" title="Download conversation as Markdown">Export</button><button id="settings" class="quiet">Settings</button></div>
+    </header>
+    <div id="setup" class="setup" hidden>
+      <div><strong id="setup-title">Connect your local model</strong><p id="setup-description">Install Ollama, start it, and download a model to begin.</p></div>
+      <code>ollama pull qwen3:8b</code><button id="refresh" class="quiet">Check again ↻</button>
+    </div>
+    <section id="scroll-area" aria-label="Conversation">
+      <div id="welcome">
+        <div class="welcome-mark">✳</div><div class="eyebrow">A LITTLE CLARITY, CLOSE TO HOME</div>
+        <h1>Make room for<br><em>your next idea.</em></h1>
+        <p>Your personal AI for everyday questions, big plans,<br class="desktop-break"> and everything you’re figuring out along the way.</p>
+        <div class="suggestions">
+          <button data-prompt="Help me plan a simple week of healthy dinners. Ask about my preferences first."><span>↗</span><strong>Make everyday easier</strong><small>Meals, routines & getting organized</small></button>
+          <button data-prompt="Help me understand a topic I am curious about. First ask what I want to learn and what I already know."><span>⌘</span><strong>Follow your curiosity</strong><small>Learn something, one step at a time</small></button>
+          <button data-prompt="Be my writing partner. Ask what I am working on and help me find the right words."><span>✎</span><strong>Find the right words</strong><small>Write, brainstorm & bring ideas to life</small></button>
+          <button data-prompt="Help me work through a coding problem. Ask about the language and what I am trying to build."><span>⌁</span><strong>Build something useful</strong><small>A second pair of eyes for your code</small></button>
+        </div>
+      </div>
+      <div id="messages" role="log" aria-live="polite" aria-label="Messages"></div>
+    </section>
+    <div class="composer-area">
+      <div id="notice" role="status" hidden></div>
+      <form id="composer">
+        <div id="attachment" hidden><span></span><button type="button" id="remove-file" aria-label="Remove attached file">×</button></div>
+        <textarea id="prompt" rows="1" maxlength="12000" placeholder="What’s on your mind?" aria-label="Your message"></textarea>
+        <div class="composer-bottom"><div><button type="button" id="attach" class="icon-button" title="Attach a text or code file" aria-label="Attach a text or code file">＋</button><span class="composer-hint">A private place for your thoughts</span></div><button type="submit" id="send" aria-label="Send message">↑</button><button type="button" id="stop" hidden>Stop</button></div>
+      </form>
+      <p class="footer-note">Local models. Local conversations. <span>AI can make mistakes — check what matters.</span></p>
+    </div>
+  </main>
+  <input id="file" type="file" accept=".txt,.md,.csv,.json,.py,.js,.ts,.html,.css,.sh,.yaml,.yml,.log,.rs,.go,.java,.c,.cpp" hidden>
+  <dialog id="preferences">
+    <form method="dialog" id="preferences-form">
+      <div class="dialog-title"><h2>Make yourself at home</h2><button value="cancel" class="icon-button" aria-label="Close settings">×</button></div>
+      <p>Preferences stay in this browser. Conversations stay in the app’s local database.</p>
+      <label for="system-prompt">How should your assistant help?</label><textarea id="system-prompt" rows="7" maxlength="4000"></textarea>
+      <label for="temperature">Creativity <output id="temperature-value">0.7</output></label><input id="temperature" type="range" min="0" max="2" step="0.1" value="0.7">
+      <small>Lower for focused answers. Higher for more variety.</small>
+      <div class="dialog-actions"><button type="button" id="reset-settings" class="quiet">Reset defaults</button><button value="save" class="primary">Save preferences</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
